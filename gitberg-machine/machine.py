@@ -48,6 +48,5 @@ def usage():
     print __doc__
 
 tempdir = os.path.join(os.path.dirname(sys.argv[0]), 'templates/')
-print dir
 env = Environment(loader=FileSystemLoader([tempdir,'/',]))
 main(sys.argv[1:])
