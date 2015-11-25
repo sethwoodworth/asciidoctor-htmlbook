@@ -26,7 +26,7 @@ xmlns="http://www.w3.org/1999/xhtml">
   <section data-type="copyright-page">
     <% if @header %><h1><%= @header.title %></h1><% end %>
     <% if attr? :author %><p data-type="author">by <%= attr :author %></p><% end %>
-    <% include 'metadata.html' %>
+    {% include 'metadata.html' %}
   </section>
 <% if @level == 1 && @role == 'dedication' %>
 <section data-type="dedication"<%= @id && %( id="#{@id}") %>>
