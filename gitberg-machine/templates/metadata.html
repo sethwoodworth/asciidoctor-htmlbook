@@ -1,0 +1,47 @@
+<div class="rights">
+<p>Rights for this book: 
+<a href="{{ metadata.rights_url }}">{{ metadata.rights }}</a>
+</p>
+{% if metadata._edition %}
+{% if metadata._edition  is equalto 'rtc_isbn' %}
+Recovering the Classics is a crowdsourced collection of original covers for great works in the public domain where <a href="http://thecreativeactionnetwork.com/contribute/recovering-the-classics/">anyone can contribute</a>.
+<br /><br />
+Why? Sadly, many of the greatest classics in the public domain are left with poorly designed or auto-generated covers that fail to capture what makes these books exciting and inspiring to us. So we invited illustrators, typographers, and designers of all stripes to create new covers for 100 of the greatest works in the public domain.
+<br /><br />
+<a href="http://thecreativeactionnetwork.com/contribute/recovering-the-classics/">Anyone can contribute</a>, and all designs are available for sale as prints, apparel, and other products to support the artists.
+<br /><br />
+Host your own local Recovering the Classics exhibit as part of our <a href="http://50x50.us/">50x50 campaign</a>.
+{% elif metadata.publisher is equalto 'Project Gutenberg'%}
+
+{% else %}
+<p>
+This edition is published by {{ metadata.publisher }}.
+</p>
+{% endif %}
+{% endif %}
+{% if metadata.gutenberg_issued %}
+<p>
+Originally <a href="{{ metadata.url }}">issued by Project Gutenberg</a> on {{ metadata.gutenberg_issued }}. To support the work of Project Gutenberg, visit their <a href="https://www.gutenberg.org/wiki/Gutenberg:Project_Gutenberg_Needs_Your_Donation">Donation Page</a>.
+</p>
+{% endif %}
+{% if metadata._repo %}
+<p>
+This free ebook has been produced by <a href="https://www.GITenberg.org/">GITenberg</a>, a program of the <a href="http://ebookfoundation.org/">Free Ebook Foundation</a>. If you have corrections or improvements to make to this ebook, or you want to use the source files for this ebook, visit <a href="https://github.com/GITenberg/{{ metadata._repo }}/">the book's github repository</a>. You can support the work of the Free Ebook Foundation at their <a href="http://ebookfoundation.org/contributions.html">Contributors Page.</a>
+</p>
+{% endif %}
+{% if metadata.covers %}
+{% for cover in metadata.covers %}
+{% if cover.rights %}
+<p>
+The {{cover.cover_type}} art is <a href="{{ cover.rights_url }}">{{ cover.rights }}</a>{% if cover.attribution %}, by {{cover.attribution}}{% endif %}.
+</p>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if metadata.isbn %}
+<p>
+ISBN: {{ metadata.isbn }}
+</p>
+{% endif %}
+
+</div>

@@ -22,3 +22,12 @@ So If my book repo exists in `/Documents/MyBook`, you would do the following:
 ```bash
 $ ruby scripts/convert_book.rb /Documents/MyBook
 ```
+
+Use Jinja2 to merge in metadata
+----------------------------
+The 'machine' directory contains a python script that will read a gitenberg yaml file and merge it with a template file using the Jinja2 template engine. A hook for this has been inserted into the htmlbook-autogen conversion. Assumes installation of ./machine/requirements.txt
+
+run the command like this:
+```bash
+$ python ./gitberg-machine/machine.py -m /Documents/MyBook/metadata.yaml /Documents/MyBook/book.html
+```
