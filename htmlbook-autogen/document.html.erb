@@ -1,12 +1,18 @@
 <%#encoding:UTF-8%><!DOCTYPE html>
 
 <html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.w3.org/1999/xhtml ../schema/htmlbook.xsd"
+xsi:schemaLocation="http://www.w3.org/1999/xhtml https://raw.githubusercontent.com/oreillymedia/HTMLBook/master/schema/htmlbook.xsd"
 xmlns="http://www.w3.org/1999/xhtml">
 
+<% toc_levels = (attr? :levels) ? (attr :levels).to_i : (@document.attr :toclevels, 2).to_i %>
   <head>
     <title><%= doctitle %></title>
     <meta name="<%= doctitle %>" content="text/html; charset=utf-8"/>
+
+    <% if attr? :author %>
+      <meta name="author" content="<%= attr :author %>"/>
+    <% end %>
+
   </head>
 <body<%= @id && %( id="#{@id}") %> data-type="book">
   <% if @header %><h1><%= @header.title %></h1><% end %>
@@ -15,7 +21,7 @@ xmlns="http://www.w3.org/1999/xhtml">
   </figure>
   <section data-type="titlepage">
     <% if @header %><h1><%= @header.title %></h1><% end %>
-    <% if attr? :author %><h2 data-type="author"><%= attr :author %></h2><% end %>
+    <% if attr? :author %><p data-type="author"><%= attr :author %></p><% end %>
   </section>
   <section data-type="copyright-page">
     <% if @header %><h1><%= @header.title %></h1><% end %>
@@ -27,6 +33,15 @@ xmlns="http://www.w3.org/1999/xhtml">
 
 <%= content %>
 </section><% end %>
+
+   <% if (attr? :toc) && (attr? 'toc-placement', 'auto') %>
+<nav id="toc" data-type="toc" >
+
+<%= outline self %>
+
+</nav>
+   <%end %>
+
 <%= content %>
 </body>
 </html>
