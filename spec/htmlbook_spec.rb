@@ -5,6 +5,15 @@ describe "HTMLBook Templates" do
 
 
 	# Tests section.html.erb templates
+	it "should convert part titles" do
+	  html = Nokogiri::HTML(convert("
+[part]
+== Part Title
+
+Some introductory part text"))
+          html.xpath("//div[@data-type='part']/h1").text.should == "Part Title"
+	end
+
 	it "should convert chapter titles" do
 	    html = Nokogiri::HTML(convert("== Chapter Title"))
 		html.xpath("//section[@data-type='chapter']/h1").text.should == "Chapter Title"
@@ -613,6 +622,15 @@ Finally a reference to the second footnote.footnoteref:[note2]
         it "should ignore badly formed indexterms" do 
                expect { Nokogiri::HTML(convert('This indexterm has unbalanced parens((("primary", "secondary"))')) }.not_to raise_error
         end
+
+	it "should properly convert text-term hybrids" do
+	       html = Nokogiri::HTML(convert_indexterm_tests)
+	       indexterm_p = html.xpath("//section[@id='text-term-hybrid']//p[1]")
+	       indexterms = html.xpath("//section[@id='text-term-hybrid']//p[1]//a[@data-type='indexterm']")
+	       indexterm_p.text.should == "Ruby is my favorite programming language."
+	       indexterms.length.should == 1
+	       indexterms.xpath("./@data-primary").text.should == "Ruby"
+	end
 
 	# Passthrough tests - moving these tests to Atlas app
 
