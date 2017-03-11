@@ -11,7 +11,13 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 %>
 
 <% if @level == 1 %>
-<% if sectname == 'preface' and title == 'Foreword' %>
+<% if sectname == 'part' %>
+<div data-type="part"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= %(<h1) %>><%= title %><%= %(</h1>) %>
+
+<%= content %>
+</div>
+<% elsif sectname == 'preface' and title == 'Foreword' %>
 <section data-type="foreword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
@@ -31,6 +37,12 @@ title_html = %(#{sectnum} #{title_html}) if !@special && (attr? 'numbered') && @
 </section>
 <% elsif sectname == 'appendix' and role == 'bibliography' %>
 <section data-type="bibliography"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
+
+<%= content %>
+</section>
+<% elsif sectname == 'appendix' and role == 'afterword' %>
+<section data-type="afterword"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %>>
 <%= %(<h#{@level}) %>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
@@ -66,7 +78,7 @@ elsif title == 'Index' %>
 <%= content %>
 </section><% 
 else %>
-<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
+<section data-type="chapter"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %><%= attr?('data-nutshell-tab') ? %( data-nutshell-tab="#{attr 'data-nutshell-tab'}") : nil %>>
 <%= %(<h#{@level}) %> <%= @id && %( id="#{@id}")%>><%= title %><%= %(</h#{@level}>) %>
 
 <%= content %>
@@ -75,7 +87,7 @@ else %>
 
 <% if @level == 2 %>
 <section data-type="sect1"<%= attr?('id') ? %( id="#{attr 'id'}") : nil %><%= attr?('role') ? %( class="#{attr 'role'}") : nil %>>
-<h1><%= title %></h1>
+<h1 <%= @id && %( id="#{@id}")%>><%= title %></h1>
 <%= content %>
 </section>
 <% end %>
